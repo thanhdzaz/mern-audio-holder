@@ -1,0 +1,28 @@
+{
+  "name": "mern",
+  "version": "1.0.0",
+  "description": "FormService",
+  "private": true,
+  "workspaces": [
+    "modules/*"
+  ],
+  "scripts": {
+    "start:frontend": "cross-env NODE_ENV=development yarn workspace @mern/frontend start",
+    "start:backend": "cross-env NODE_ENV=development yarn workspace @mern/backend start",
+    "start": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"yarn start:frontend\" \"yarn start:backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thanhdzaz/mern-audio-holder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  },
+  "resolutions": {
+    "mongodb": "4.17.1"
+  }
+}

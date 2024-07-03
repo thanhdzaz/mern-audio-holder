@@ -12,6 +12,10 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+});
 app.use(bodyParser.json());
 
 // MongoDB Connection
