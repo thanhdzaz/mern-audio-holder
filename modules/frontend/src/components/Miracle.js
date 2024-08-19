@@ -9,6 +9,8 @@ export default forwardRef((props, ref) => {
   const audioSource = useRef(null);
   const ctxCanvas = useRef(null);
 
+  const prevId = useRef(null);
+
   const [state, setState] = useState({
     track: new Audio(),
     title: '',
@@ -18,16 +20,24 @@ export default forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({}));
 
-  const togglePlay = useCallback(() => {
-    if (!audioEl.current.paused) {
+  const togglePlay = useCallback((isChange) => {
+    if (!audioEl.current.paused && !isChange) {
       audioEl.current.pause();
       setState((prevState) => ({ ...prevState, isPlay: false }));
       return;
     }
 
+
+
     if (audioEl.current.src != `http://localhost:5000/api/songs/${props._id}/audio`) {
       audioEl.current.src = `http://localhost:5000/api/songs/${props._id}/audio`;
       audioEl.current.crossOrigin = "anonymous";
+    }
+
+    if (!state.isPlay && audioEl.current.ended) {
+      audioEl.current.currentTime = 0;
+      audioEl.current.play()
+      return;
     }
 
     audioEl.current.play();
@@ -93,7 +103,8 @@ export default forwardRef((props, ref) => {
       ...prevState,
       ...props
     }));
-    togglePlay();
+    togglePlay(prevId.current != props._id);
+    prevId.current = props._id;
   }, [props._id, canvasRef]);
 
   return (

@@ -42,10 +42,9 @@ function Songs() {
             <ul>
                 {
                     songs.map(song => (
-                        <li key={song._id} className="song-item"
+                        <li key={song._id} className="song-item cursor-pointer hover:translate-x-3 transition-all duration-500"
                             onClick={() => playSong(song)}>
                             <span>{song.title} - {song.artist}</span>
-
                         </li>
                     ))
                 }
